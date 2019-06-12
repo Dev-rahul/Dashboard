@@ -3,7 +3,7 @@ import {AppBar, Hidden, Icon} from '@material-ui/core';
 import {FuseScrollbars} from '@fuse';
 import clsx from 'clsx';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
-import Logo from 'app/fuse-layouts/shared-components/Logo';
+import Logo from 'app/shared-components/Logo/logo.js';
 import NavbarFoldedToggleButton from 'app/fuse-layouts/shared-components/NavbarFoldedToggleButton';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
@@ -36,7 +36,7 @@ function NavbarLayout1(props)
             >
 
                 <div className="flex flex-1 pr-8">
-                    <Logo/>
+                   <Logo/>
                 </div>
 
                 <Hidden mdDown>

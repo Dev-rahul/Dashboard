@@ -3,6 +3,7 @@ import {AppBar, Avatar, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import clsx from 'clsx';
 import {useSelector} from 'react-redux';
+import Logo from 'app/shared-components/Logo/logo.js';
 
 const useStyles = makeStyles(theme => ({
     root  : {
@@ -49,13 +50,9 @@ function UserNavbarHeader(props)
             classes={{root: classes.root}}
             className="user relative flex flex-col items-center justify-center pt-24 pb-64 mb-32 z-0"
         >
-            <Typography className="username text-16 whitespace-no-wrap" color="inherit">{user.data.displayName}</Typography>
-            <Typography className="email text-13 mt-8 opacity-50 whitespace-no-wrap" color="inherit">{user.data.email}</Typography>
-            <Avatar
-                className={clsx(classes.avatar, "avatar")}
-                alt="user photo"
-                src={user.data.photoURL && user.data.photoURL !== '' ? user.data.photoURL : "assets/images/avatars/profile.jpg"}
-            />
+            <div className="flex flex-1 pl-8">
+                   <Logo/>
+            </div>
         </AppBar>
     );
 }

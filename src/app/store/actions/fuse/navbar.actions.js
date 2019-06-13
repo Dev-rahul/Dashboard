@@ -4,6 +4,7 @@ export const TOGGLE_FOLDED_NAVBAR = '[NAVBAR] TOGGLE FOLDED';
 export const TOGGLE_MOBILE_NAVBAR = '[NAVBAR] TOGGLE MOBILE';
 export const OPEN_MOBILE_NAVBAR = '[NAVBAR] OPEN MOBILE';
 export const CLOSE_MOBILE_NAVBAR = '[NAVBAR] CLOSE MOBILE';
+export const ON_ITEM_CLICK = '[NAVBAR] ON ITEM';
 
 export function navbarToggleFolded()
 {
@@ -46,4 +47,14 @@ export function navbarCloseMobile()
         type: CLOSE_MOBILE_NAVBAR
     }
 }
+
+export function handleTabAdd(name) {
+    console.log("mobile close");
+    return {
+        type: ON_ITEM_CLICK,
+        tabName: name
+    }
+    
+}
+
 

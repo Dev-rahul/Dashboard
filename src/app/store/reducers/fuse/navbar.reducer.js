@@ -2,7 +2,8 @@ import * as Actions from '../../actions/fuse/index';
 
 const initialState = {
     foldedOpen: false,
-    mobileOpen: false
+    mobileOpen: false,
+    tab: []
 };
 
 const navbar = function (state = initialState, action) {
@@ -48,6 +49,18 @@ const navbar = function (state = initialState, action) {
             return {
                 ...state,
                 mobileOpen: false
+            }
+        }
+        case Actions.ON_ITEM_CLICK :
+        {
+            console.log(action.tabName);
+            const tabs = [...state.tab];
+            tabs.push({
+                title: action.tabName
+            })
+            return {
+                ...state,
+                tab:  tabs
             }
         }
         default:

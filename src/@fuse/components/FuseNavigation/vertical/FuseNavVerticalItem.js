@@ -61,11 +61,12 @@ function FuseNavVerticalItem(props)
             to={item.url}
             activeClassName="active"
             className={clsx(classes.item, listItemPadding, 'list-item', active)}
-            onClick={ev => dispatch(Actions.navbarCloseMobile())}
+            onClick={ev => dispatch(Actions.handleTabAdd(item.id))}
+          
             exact={item.exact}
         >
             {item.icon && (
-                <Icon className="list-item-icon text-16 flex-shrink-0 mr-16" color="action">{item.icon}</Icon>
+                <h1>h</h1>
             )}
             <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14 list-item-text-primary'}}/>
             {item.badge && (

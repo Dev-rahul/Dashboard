@@ -1,5 +1,5 @@
 import {fuseDark} from '@fuse/fuse-colors';
-import lightBlue from '@material-ui/core/colors/lightBlue';
+import lightBlue from '@material-ui/core/colors/red';
 import red from '@material-ui/core/colors/red';
 
 const themesConfig = {

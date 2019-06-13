@@ -6,8 +6,7 @@ import {makeStyles} from '@material-ui/styles';
 const useStyles = makeStyles(theme => ({
     root      : {
         '& .logo-icon'                : {
-            width     : 24,
-            height    : 24,
+         
             transition: theme.transitions.create(['width', 'height'], {
                 duration: theme.transitions.duration.shortest,
                 easing  : theme.transitions.easing.easeInOut

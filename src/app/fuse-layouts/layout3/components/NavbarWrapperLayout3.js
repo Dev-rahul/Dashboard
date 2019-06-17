@@ -46,13 +46,13 @@ function NavbarWrapperLayout3(props)
     return (
         <ThemeProvider theme={navbarTheme}>
 
-            <Hidden mdDown>
+            <Hidden smDown>
                 <Paper className={clsx(classes.navbar)} square={true}>
                     <NavbarLayout3/>
                 </Paper>
             </Hidden>
 
-            <Hidden lgUp>
+            <Hidden mdUp>
                 <Drawer
                     anchor="left"
                     variant="temporary"

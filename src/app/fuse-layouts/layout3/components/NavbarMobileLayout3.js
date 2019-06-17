@@ -37,11 +37,11 @@ function NavbarMobileLayout3(props)
                     <Logo/>
                 </div>
 
-                <Hidden mdDown>
+                <Hidden smDown>
                     <NavbarFoldedToggleButton className="w-40 h-40 p-0"/>
                 </Hidden>
 
-                <Hidden lgUp>
+                <Hidden mdUp>
                     <NavbarMobileToggleButton className="w-40 h-40 p-0">
                         <Icon>arrow_back</Icon>
                     </NavbarMobileToggleButton>

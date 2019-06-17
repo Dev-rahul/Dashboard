@@ -57,16 +57,11 @@ function FuseNavVerticalItem(props)
     return (
         <ListItem
             button
-            component={NavLinkAdapter}
-            to={item.url}
-            activeClassName="active"
             className={clsx(classes.item, listItemPadding, 'list-item', active)}
-            onClick={ev => dispatch(Actions.handleTabAdd(item.id))}
-          
-            exact={item.exact}
+            onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}
         >
             {item.icon && (
-                <h1>h</h1>
+                <Icon className="list-item-icon text-16 flex-shrink-0 mr-16" color="action">{item.icon}</Icon>
             )}
             <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14 list-item-text-primary'}}/>
             {item.badge && (

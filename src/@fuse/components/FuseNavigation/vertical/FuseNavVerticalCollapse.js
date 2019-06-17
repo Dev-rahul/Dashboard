@@ -5,11 +5,13 @@ import {FuseUtils} from '@fuse';
 import {withRouter} from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import * as Actions from 'app/store/actions';
 import FuseNavVerticalGroup from './FuseNavVerticalGroup';
 import FuseNavVerticalItem from './FuseNavVerticalItem';
 import FuseNavBadge from './../FuseNavBadge';
 import FuseNavVerticalLink from './FuseNavVerticalLink';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,6 +30,9 @@ const useStyles = makeStyles(theme => ({
             width       : '100%',
             borderRadius: '0'
         }
+    },
+    icon: {
+        display: "contents"
     }
 }));
 
@@ -65,7 +70,7 @@ function isUrlInChildren(parent, url)
 function FuseNavVerticalCollapse(props)
 {
     const userRole = useSelector(({auth}) => auth.user.role);
-
+    const dispatch = useDispatch();
     const classes = useStyles(props);
     const [open, setOpen] = useState(() => needsToBeOpened(props.location, props.item));
     const {item, nestedLevel, active} = props;
@@ -94,17 +99,20 @@ function FuseNavVerticalCollapse(props)
 
             <ListItem
                 button
-                className={clsx(classes.item, listItemPadding, 'list-item', active)}
-                onClick={handleClick}
+                
+                
             >
+            <div className={clsx(classes.item, classes.icon, listItemPadding, 'list-item', active)}
+                onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}>
                 {item.icon && (
-                    <Icon color="action" className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
+                    <Icon color="action"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
                 )}
                 <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14'}}/>
                 {item.badge && (
                     <FuseNavBadge className="mr-4" badge={item.badge}/>
                 )}
-                <IconButton disableRipple className="w-16 h-16 p-0">
+                </div>
+                <IconButton disableRipple className="w-16 h-16 p-0" onClick={handleClick}>
                     <Icon className="text-16 arrow-icon" color="inherit">
                         {open ? 'expand_less' : 'expand_more'}
                     </Icon>

@@ -28,14 +28,14 @@ function ToolbarLayout2(props)
                 <Toolbar className="container p-0 lg:px-24">
 
                     {config.navbar.display && (
-                        <Hidden lgUp>
+                        <Hidden mdUp>
                             <NavbarMobileToggleButton className="w-64 h-64 p-0"/>
                             <div className={classes.separator}/>
                         </Hidden>
                     )}
 
                     <div className="flex flex-1">
-                        <Hidden mdDown>
+                        <Hidden smDown>
                             <FuseShortcuts/>
                         </Hidden>
                     </div>
@@ -48,7 +48,7 @@ function ToolbarLayout2(props)
 
                         <FuseSearch/>
 
-                        <Hidden lgUp>
+                        <Hidden mdUp>
 
                             <div className={classes.separator}/>
 

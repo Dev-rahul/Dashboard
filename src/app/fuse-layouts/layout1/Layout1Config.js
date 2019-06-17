@@ -9,7 +9,7 @@ const config = {
             position: 'left'
         },
         toolbar       : {
-            display : true,
+            display : false,
             style   : 'fixed',
             position: 'below'
         },
@@ -19,7 +19,7 @@ const config = {
             position: 'below'
         },
         leftSidePanel : {
-            display: true
+            display: true,
         },
         rightSidePanel: {
             display: true

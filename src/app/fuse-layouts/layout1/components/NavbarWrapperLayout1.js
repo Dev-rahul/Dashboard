@@ -137,7 +137,7 @@ function NavbarWrapperLayout1(props)
                          folded && classes.wrapperFolded
                      )}
             >
-                <Hidden mdDown>
+                <Hidden xsDown>
                     <div
                         className={
                             clsx(
@@ -156,7 +156,7 @@ function NavbarWrapperLayout1(props)
                     </div>
                 </Hidden>
 
-                <Hidden lgUp>
+                <Hidden mdUp>
                     <Drawer
                         anchor={config.navbar.position}
                         variant="temporary"

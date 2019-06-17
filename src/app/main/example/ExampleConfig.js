@@ -3,7 +3,8 @@ import Example from './Example';
 export const ExampleConfig = {
     settings: {
         layout: {
-            config: {}
+            config: {
+            }
         }
     },
     routes  : [

@@ -172,7 +172,7 @@ function FuseSidePanel(props)
 
     return (
         <React.Fragment>
-            <Hidden mdDown>
+            <Hidden smDown>
                 <Paper
                     className={clsx(classes.root, classes.paper, props.className, opened ? "opened" : "closed", props.position)}
                     elevation={3}
@@ -195,7 +195,7 @@ function FuseSidePanel(props)
                     </div>
                 </Paper>
             </Hidden>
-            <Hidden lgUp>
+            <Hidden mdUp>
                 <Drawer
                     classes={{
                         paper: clsx(classes.paper, props.className)

@@ -18,7 +18,7 @@ function FusePageSimpleSidebar(props, ref)
 
     return (
         <React.Fragment>
-            <Hidden lgUp={props.variant === 'permanent'}>
+            <Hidden mdUp={props.variant === 'permanent'}>
                 <Drawer
                     variant="temporary"
                     anchor={props.position}
@@ -44,7 +44,7 @@ function FusePageSimpleSidebar(props, ref)
                 </Drawer>
             </Hidden>
             {props.variant === 'permanent' && (
-                <Hidden mdDown>
+                <Hidden smDown>
                     <Drawer
                         variant="permanent"
                         className={clsx(classes.sidebarWrapper, props.variant)}

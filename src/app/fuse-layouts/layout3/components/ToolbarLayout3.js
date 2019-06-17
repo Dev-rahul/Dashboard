@@ -29,13 +29,13 @@ function ToolbarLayout3(props)
                 <Toolbar className="container p-0 lg:px-24">
 
                     {config.navbar.display && (
-                        <Hidden lgUp>
+                        <Hidden mdUp>
                             <NavbarMobileToggleButton className="w-64 h-64 p-0"/>
                             <div className={classes.separator}/>
                         </Hidden>
                     )}
 
-                    <Hidden mdDown>
+                    <Hidden smDown>
                         <div className={clsx("flex flex-shrink-0 items-center")}>
                             <Logo/>
                         </div>
@@ -56,7 +56,7 @@ function ToolbarLayout3(props)
 
                         <QuickPanelToggleButton/>
 
-                        <Hidden mdDown>
+                        <Hidden smDown>
                             <div className={classes.separator}/>
                         </Hidden>
 

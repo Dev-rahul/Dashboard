@@ -4,7 +4,10 @@ export const TOGGLE_FOLDED_NAVBAR = '[NAVBAR] TOGGLE FOLDED';
 export const TOGGLE_MOBILE_NAVBAR = '[NAVBAR] TOGGLE MOBILE';
 export const OPEN_MOBILE_NAVBAR = '[NAVBAR] OPEN MOBILE';
 export const CLOSE_MOBILE_NAVBAR = '[NAVBAR] CLOSE MOBILE';
-export const ON_ITEM_CLICK = '[NAVBAR] ON ITEM';
+export const GET_TAB_LIST = '[NAVBAR] GET TABS';
+export const CHANGE_ACTIVE_TAB = '[NAVBAR] CHANGE ACTIVE TAB';
+export const ON_TAB_CLOSE = '[NAVBAR] TAB CLOSE';
+export const ON_TAB_POSITION_CHANGE = '[NAVBAR] TAB POSITION CHANGE';
 
 export function navbarToggleFolded()
 {
@@ -41,20 +44,34 @@ export function navbarOpenMobile()
     }
 }
 
-export function navbarCloseMobile()
+export function navbarCloseMobile(tabName)
 {
     return {
-        type: CLOSE_MOBILE_NAVBAR
+        type: CLOSE_MOBILE_NAVBAR,
+        tabName: tabName
     }
 }
 
-export function handleTabAdd(name) {
-    console.log("mobile close");
+export function handleTabChange(activeTab)
+{
     return {
-        type: ON_ITEM_CLICK,
-        tabName: name
+        type: CHANGE_ACTIVE_TAB,
+        activeTab: activeTab
     }
-    
+}
+export function handleTabClose(index)
+{
+    return {
+        type: ON_TAB_CLOSE,
+        index: index
+    }
 }
 
+export function handleTabPositionChange(a, b) {
+    return {
+        type: ON_TAB_POSITION_CHANGE,
+        tab1: a,
+        tab2: b
+    }
+}
 

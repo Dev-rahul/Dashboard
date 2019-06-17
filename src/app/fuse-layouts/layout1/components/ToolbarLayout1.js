@@ -6,7 +6,6 @@ import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarM
 import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
 import {useSelector} from 'react-redux';
-import FullWidthTabs from '../../tabs/tabs';
 
 const useStyles = makeStyles(theme => ({
     separator: {
@@ -26,7 +25,46 @@ function ToolbarLayout1(props)
     return (
         <ThemeProvider theme={toolbarTheme}>
             <AppBar id="fuse-toolbar" className="flex relative z-10" color="default">
-        
+                <Toolbar className="p-0">
+
+                    {config.navbar.display && config.navbar.position === 'left' && (
+                        <Hidden mdUp>
+                            <NavbarMobileToggleButton className="w-64 h-64 p-0"/>
+                            <div className={classes.separator}/>
+                        </Hidden>
+                    )}
+
+                    <div className="flex flex-1">
+                        <Hidden xsDown>
+                            <FuseShortcuts className="px-16"/>
+                        </Hidden>
+                    </div>
+
+                    <div className="flex">
+
+                        <UserMenu/>
+
+                        <div className={classes.separator}/>
+
+                        <FuseSearch/>
+
+                        <Hidden mdUp>
+
+                            <div className={classes.separator}/>
+
+                        </Hidden>
+
+                        <div className={classes.separator}/>
+
+                        <QuickPanelToggleButton/>
+                    </div>
+
+                    {config.navbar.display && config.navbar.position === 'right' && (
+                        <Hidden mdUp>
+                            <NavbarMobileToggleButton/>
+                        </Hidden>
+                    )}
+                </Toolbar>
             </AppBar>
         </ThemeProvider>
     );

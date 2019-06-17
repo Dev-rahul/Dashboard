@@ -3,6 +3,7 @@ import {AppBar, Hidden, Icon} from '@material-ui/core';
 import {FuseScrollbars} from '@fuse';
 import clsx from 'clsx';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
+import Logo from 'app/fuse-layouts/shared-components/Logo';
 import NavbarFoldedToggleButton from 'app/fuse-layouts/shared-components/NavbarFoldedToggleButton';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
@@ -17,9 +18,6 @@ const useStyles = makeStyles({
         backgroundRepeat            : 'no-repeat',
         backgroundSize              : '100% 40px, 100% 10px',
         backgroundAttachment        : 'local, scroll'
-    },
-    buttonToggle: {
-        background: 'white'
     }
 });
 
@@ -37,15 +35,15 @@ function NavbarLayout1(props)
                 className="flex flex-row items-center flex-shrink h-64 min-h-64 pl-20 pr-12"
             >
 
-            <div className="flex flex-1 pr-8">
-          
-            </div>
+                <div className="flex flex-1 pr-8">
+                    <Logo/>
+                </div>
 
-                <Hidden mdDown>
-                    <NavbarFoldedToggleButton className={clsx("w-40 h-40 p-0", classes.buttonToggle)}/>
+                <Hidden smDown>
+                    <NavbarFoldedToggleButton className="w-40 h-40 p-0"/>
                 </Hidden>
 
-                <Hidden lgUp>
+                <Hidden mdUp>
                     <NavbarMobileToggleButton className="w-40 h-40 p-0">
                         <Icon>arrow_back</Icon>
                     </NavbarMobileToggleButton>

@@ -10,6 +10,11 @@ import AppContext from './AppContext';
 import routes from './fuse-configs/routesConfig';
 import {create} from 'jss';
 import {StylesProvider, jssPreset, createGenerateClassName} from '@material-ui/styles';
+import { CookiesProvider } from 'react-cookie';
+
+
+
+
 
 const jss = create({
     ...jssPreset(),
@@ -29,6 +34,7 @@ const App = () => {
             <StylesProvider jss={jss} generateClassName={generateClassName}>
                 <Provider store={store}>
                     <Auth>
+                        <CookiesProvider>
                         <Router history={history}>
                             <FuseAuthorization>
                                 <FuseTheme>
@@ -36,6 +42,7 @@ const App = () => {
                                 </FuseTheme>
                             </FuseAuthorization>
                         </Router>
+                        </CookiesProvider>
                     </Auth>
                 </Provider>
             </StylesProvider>

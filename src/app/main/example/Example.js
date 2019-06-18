@@ -1,6 +1,5 @@
 import React, {useEffect,useState, useRef} from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import {FusePageSimple, DemoContent} from '@fuse';
+import {FusePageSimple} from '@fuse';
 import {makeStyles} from '@material-ui/styles';
 import {useDispatch, useSelector} from 'react-redux';
 import * as Actions from '../../store/actions';
@@ -8,7 +7,16 @@ import reducer from '../../store/reducers';
 import withReducer from 'app/store/withReducer';
 import Tabs, { Tab } from 'react-awesome-tabs';
 import 'react-awesome-tabs/src/sass/react-awesome-tabs.scss';
-import Websocket from 'react-websocket';
+import axios from'axios';
+import { useCookies } from 'react-cookie';
+import Dashboard from '../Dashboard/dashboard';
+import ExtensionTable from '../Table/table';
+import DataTable from "../Table/table1";
+
+
+
+
+
 
 
 const useForceUpdate = () => useState()[1];
@@ -26,20 +34,27 @@ const useStyles = makeStyles({
         zIndex  : 99
     }
 });
-function renderTabContent(tab){
+function renderTabContent(tab, extensonList){
     console.log(tab);
     if(tab.name === 'dashboard') {
-        return(<h1>This is dashboard component</h1>)
+        return(<Dashboard/>)
     }
     else if(tab.name === 'CQC') {
-        return (<h2>This is child coc component </h2>);
+        return (<DataTable extensionList={extensonList}/>);
     } else if(tab.name === 'settings') {
-        return (<h3> This is settings Component </h3>);
+        return (<h3> This is settings Component {JSON.stringify(extensonList)} </h3>);
     }
     
 }
 
 function Example (props) {
+    const [extensonList, setExtensonList] = useState([]);
+    const [cookies, setCookie] = useCookies(['core_cookie']);
+    
+    // cookies.set("core-cookies", true, {"core_cookie":"50635548-f598-46b7-a393-98c6ffc947e2", 
+    //                             "path" :' /', 
+    //                             "domain":'10.226.14.186', 
+    //                             "Expires":"Tue, 19 Jan 2038 03:14:07 GMT"});
     const dispatch = useDispatch();
     const forceUpdate = useForceUpdate();
     const pageLayout = useRef(null);
@@ -77,7 +92,7 @@ function Example (props) {
 								title={ value.name }
 								showClose={ true }
 							>
-								{renderTabContent(value)}
+								{renderTabContent(value, extensonList)}
 							</Tab>
 						);
 					})
@@ -94,16 +109,65 @@ function Example (props) {
     //     dispatch(Actions.getUserData());
     // }, [dispatch, props.match.params]);
 
-    // useEffect(() => {
-    //     dispatch(Actions.getContacts(props.match.params));
-    // }, [dispatch, props.match.params]);
+    useEffect(() => {
+     const data = {
+           
+                    "function" : "extensions.auth",
+                "pin" : "0100",
+                "extension" : "100",
+                "sil_tenant_url" : "/iit909",
+                'Access-Control-Allow-Credentials': 'omit'
+            }
+        axios({
+            method: 'post',
+            url: 'http://10.226.14.70:7778/6/api',
+            data
+        }).then(
+            (data) => {
+                console.log(data.data.core_cookie);
+
+                setCookie('core_cookie', data.data.core_cookie);
+                const formttedData = {
+                     
+                    "function": "extensions.list",
+                    "limit": 200,
+                    "page": 1,
+                    "start": 0
+                }
+                console.log(cookies['core_cookie']);
+                axios.post('http://10.226.14.70:7778/6/api',formttedData, {Cookie: 'core_cookie=3dbc57e9-e0f8-45e4-aa6f-8dda45391b92'})
+                .then(response => {
+                    console.log("data second", response)
+                    setExtensonList(response.data.items)
+                })
+            }
+        )  
+
+        // const cookie1 = {"core_cookie":"50635548-f598-46b7-a393-98c6ffc947e2", 
+        // "path" :' /', 
+        // "domain":'10.226.14.186', 
+        // "Expires":"Tue, 19 Jan 2038 03:14:07 GMT"};
+
+       
+    //     axios.post('http://10.226.14.70:7778/6/api',  {
+            
+    //             Cookie: cookie1
+
+    //     },formtteddata,  {withCredentials: true})
+    // .then(function (response) {
+    //     console.log(response);
+    // })
+    // .catch(function (error) {
+    //     console.log(error);
+    // });
+    },[]); 
 
         return (
             <FusePageSimple           
                 content={tabComponent}      
             />
         )
-    
+     
 }
 
 // export default withStyles(styles, {withTheme: true})(Example);

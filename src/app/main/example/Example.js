@@ -85,6 +85,10 @@ function Example (props) {
         </Tabs>
         )
     }
+
+    useEffect(() => {
+        console.log('component mounted');
+    })
     // useEffect(() => {
     //     dispatch(Actions.getContacts(props.match.params));
     //     dispatch(Actions.getUserData());

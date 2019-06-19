@@ -10,6 +10,7 @@ import 'react-awesome-tabs/src/sass/react-awesome-tabs.scss';
 import axios from'axios';
 import { useCookies } from 'react-cookie';
 import Dashboard from '../Dashboard/dashboard';
+import DraggableGrid from '../DragableGrid/draggableGrid';
 import ExtensionTable from '../Table/table';
 import DataTable from "../Table/table1";
 
@@ -101,9 +102,7 @@ function Example (props) {
         )
     }
 
-    useEffect(() => {
-        console.log('component mounted');
-    })
+   
     // useEffect(() => {
     //     dispatch(Actions.getContacts(props.match.params));
     //     dispatch(Actions.getUserData());

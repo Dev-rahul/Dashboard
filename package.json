@@ -46,6 +46,7 @@
         "react-dom": "16.8.6",
         "react-draggable": "3.3.0",
         "react-frame-component": "4.1.0",
+        "react-grid-layout": "^0.16.6",
         "react-masonry-css": "1.0.12",
         "react-number-format": "4.0.8",
         "react-popper": "1.0.2",
@@ -62,6 +63,7 @@
         "react-window": "1.8.2",
         "redux": "4.0.1",
         "redux-thunk": "2.3.0",
+        "socket.io-client": "^2.2.0",
         "typeface-muli": "0.0.71",
         "velocity-react": "1.4.3"
     },

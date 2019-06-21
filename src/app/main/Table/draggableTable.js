@@ -18,7 +18,7 @@ class DraggableTable extends Component {
   }
   mountEvents () {
     const headers = Array.prototype.slice.call(
-      document.querySelectorAll('.rt-resizable-header')
+      document.querySelectorAll('.draggable-header')
     )
 
     headers.forEach((header, i) => {
@@ -62,7 +62,7 @@ class DraggableTable extends Component {
 
     const cols = columns.map(col => ({
       ...col,
-      Header: <span className='draggable-header'>{col.Header}</span>
+      Header: <span className='draggable-header' style={{width: '80%'}}>{col.Header}</span>
     }))
 
     // run all reorder events

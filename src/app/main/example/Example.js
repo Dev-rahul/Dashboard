@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 });
 function renderTabContent(tab, extensonList){
     console.log(tab);
-    if(tab.name === 'dashboard') {
+    if(tab.name === 'Dashboard') {
         return(<Dashboard/>)
     }
     else if(tab.name === 'CQC') {

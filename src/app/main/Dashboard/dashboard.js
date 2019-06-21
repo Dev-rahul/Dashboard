@@ -13,6 +13,8 @@ import {FuseAnimate, FuseAnimateGroup} from '@fuse';
 import Agents from './Agents/agents';
 import Queue from './Queue/queue';
 import io from 'socket.io-client';
+import AgentDistribution from './AgentDisribution/agentDistribution';
+import ClusteredBarChart from './GraphComponent/graphComponent';
 
 import RGL, { WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css';
@@ -172,14 +174,21 @@ class Dashboard extends Component {
     }
     
     render() {
+      let culstedComponent = null;
+      if(this.state.queueList.length>0) {
+        culstedComponent = (
+          <ClusteredBarChart queueData={this.state.queueList}/>
+        )
+      }
         return (
              <ReactGridLayout
           {...this.props}
           layout={this.state.layout}
+          draggableCancel=".MyDraggableCancel" 
           onLayoutChange={this.onLayoutChange}
           onResizeStop={this.onResize}
         >
-         <div key='1' data-grid={{ w: 12, minh: 4, x: 0, y: 0, i: "1" }}>
+         <div key='1' data-grid={{ w: 12, minh: 4, h: 12, x: 0, y: 0, i: "1" }}>
             <Paper className="w-full rounded-8 shadow-none border-1">
                 <div className="flex items-center justify-between px-16 py-16 border-b-1">
                     <Typography className="text-16">Agents</Typography>
@@ -206,7 +215,7 @@ class Dashboard extends Component {
                 </div>
             </Paper>
             </div>
-            <div key='2' data-grid={{ w: 12, minh: 4, x: 0, y: 32, i: "2" }}>
+            <div key='2' data-grid={{ w: 12, minh: 4, h: 20, x: 0, y: 32, i: "2" }}>
             <Paper className="w-full rounded-8 shadow-none border-1">
                 <div className="flex items-center justify-between px-16 py-16 border-b-1">
                     <Typography className="text-16">Queues</Typography>
@@ -232,12 +241,12 @@ class Dashboard extends Component {
                 </div>
             </Paper>
             </div>
-            <div key='3' data-grid={{ w: 12, minh: 4, h: 6, x: 0, y: 64, i: "3" }}>
+            <div key='3' data-grid={{ w: 12, minh: 4, h: 12, x: 0, y: 64, i: "3" }}>
             <Paper className="w-full rounded-8 shadow-none border-1">
                 <div className="flex items-center justify-between px-16 py-16 border-b-1">
                     <Typography className="text-16">Agent Disribution</Typography>
                 </div>
-                <div className="flex flex-col flex-1 w-full">
+                <div className="flex flex-col flex-1 w-full MyDraggableCancel" >
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
                     <FuseAnimateGroup
                                         enter={{
@@ -245,10 +254,32 @@ class Dashboard extends Component {
                                         }}
                                         className="flex flex-wrap py-24"
                                     >
-                                     {this.state.queueList.map(function(queue, index){
+                                    <AgentDistribution agentData={this.state.agentList}/>
+                    </FuseAnimateGroup>
+    
+                   
+                       
                         
-                                         return <Queue key={index} queueData={queue}/>
-                                    })}
+                    </div>
+                </div>
+            </Paper>
+            </div>
+
+            <div key='4' data-grid={{ w: 12, minh: 4, h: 12, x: 0, y: 96, i: "4" }}>
+            <Paper className="w-full rounded-8 shadow-none border-1">
+                <div className="flex items-center justify-between px-16 py-16 border-b-1">
+                    <Typography className="text-16">Calls And Agents</Typography>
+                </div>
+                <div className="flex flex-col flex-1 w-full MyDraggableCancel" >
+                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
+                    <FuseAnimateGroup
+                                        enter={{
+                                            animation: "transition.slideUpBigIn"
+                                        }}
+                                        className="flex flex-wrap py-24"
+                                    >
+                                    {culstedComponent}
+                                    
                     </FuseAnimateGroup>
     
                    

@@ -93,15 +93,20 @@ function FuseNavVerticalCollapse(props)
     {
         return null;
     }
-
-    return (
-        <ul className={clsx(classes.root, open && "open")}>
-
-            <ListItem
-                button
-                
-                
-            >
+    let collapsableComponent = (
+        <div className={clsx(classes.item, classes.icon, listItemPadding, 'list-item', active)}
+                >
+                {item.icon && (
+                    <Icon color="action"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
+                )}
+                <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14'}}/>
+                {item.badge && (
+                    <FuseNavBadge className="mr-4" badge={item.badge}/>
+                )}
+                </div>
+    )
+    if(item.id === 'Dashboard') {
+        collapsableComponent =(
             <div className={clsx(classes.item, classes.icon, listItemPadding, 'list-item', active)}
                 onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}>
                 {item.icon && (
@@ -112,11 +117,28 @@ function FuseNavVerticalCollapse(props)
                     <FuseNavBadge className="mr-4" badge={item.badge}/>
                 )}
                 </div>
-                <IconButton disableRipple className="w-16 h-16 p-0" onClick={handleClick}>
-                    <Icon className="text-16 arrow-icon" color="inherit">
-                        {open ? 'expand_less' : 'expand_more'}
-                    </Icon>
-                </IconButton>
+        )
+    }
+    let collapseIconComponent = (
+        <IconButton disableRipple className="w-16 h-16 p-0" onClick={handleClick}>
+        <Icon className="text-16 arrow-icon" color="inherit">
+            {open ? 'expand_less' : 'expand_more'}
+        </Icon>
+    </IconButton>
+    );
+    if(item.id=== 'logout') {
+        collapseIconComponent = null;
+    }
+    return (
+        <ul className={clsx(classes.root, open && "open")}>
+
+            <ListItem
+                button
+                
+                
+            >
+                {collapsableComponent}
+                {collapseIconComponent}
             </ListItem>
 
             {item.children && (

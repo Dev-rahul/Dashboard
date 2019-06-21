@@ -59,6 +59,7 @@
         "react-table": "^6.10.0",
         "react-text-mask": "5.4.3",
         "react-virtualized": "9.21.1",
+        "react-vis": "^1.11.7",
         "react-websocket": "^2.0.1",
         "react-window": "1.8.2",
         "redux": "4.0.1",

@@ -159,8 +159,8 @@ function AgentDistributionTable (props) {
 
 
   return (
-    <div className="flex flex-col justify-between flex-1 px-24 pt-24">
-        <div >
+    <div className="flex flex-col justify-between flex-1 px-24 pt-24" style={{marginBottom: '10px', height: "100%", width: "100%"}}>
+        <div  >
           <div style={{float: "right"}}>
           <IconButton className= "h-40 w-40 p-0"  aria-owns={anchorEl ? 'simple-menu' : null} aria-haspopup="true" onClick={handleClick}>
           <Icon>more_horiz</Icon>

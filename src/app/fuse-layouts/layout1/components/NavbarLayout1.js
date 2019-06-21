@@ -8,6 +8,7 @@ import NavbarFoldedToggleButton from 'app/fuse-layouts/shared-components/NavbarF
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
 import {makeStyles} from '@material-ui/styles';
+import { blockStatement } from '@babel/types';
 
 const useStyles = makeStyles({
     content: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles({
         backgroundRepeat            : 'no-repeat',
         backgroundSize              : '100% 40px, 100% 10px',
         backgroundAttachment        : 'local, scroll'
+    },
+    navBarBackground: {
+        background: "#fff"
     }
 });
 
@@ -26,28 +30,31 @@ function NavbarLayout1(props)
     const classes = useStyles();
 
     return (
-        <div className={clsx("flex flex-col overflow-hidden h-full", props.className)}>
-
-            <AppBar
-                color="primary"
-                position="static"
-                elevation={0}
-                className="flex flex-row items-center flex-shrink h-64 min-h-64 pl-20 pr-12"
-            >
-
-                <div className="flex flex-1 pr-8">
-                    <Logo/>
-                </div>
-
-                <Hidden smDown>
-                    <NavbarFoldedToggleButton className="w-40 h-40 p-0"/>
+        <div className={clsx("flex flex-col overflow-hidden h-full",classes.navBarBackground, props.className)}>
+            
+            <Hidden  smDown>
+                    <NavbarFoldedToggleButton className="w-40 h-40 p-0" />
                 </Hidden>
 
-                <Hidden mdUp>
+                <Hidden mdUp >
                     <NavbarMobileToggleButton className="w-40 h-40 p-0">
                         <Icon>arrow_back</Icon>
                     </NavbarMobileToggleButton>
                 </Hidden>
+            
+            <AppBar
+                color="primary"
+                position="static"
+                elevation={0}
+                className={clsx("flex flex-row items-center flex-shrink h-64 min-h-64 pl-20 pr-12",classes.navBarBackground)}
+            >
+                
+               
+                <div className="flex flex-1 pr-8" >
+                    <Logo/>
+                </div>
+
+                
             </AppBar>
 
             <FuseScrollbars className={clsx(classes.content)}>

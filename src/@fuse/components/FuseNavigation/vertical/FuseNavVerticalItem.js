@@ -57,13 +57,14 @@ function FuseNavVerticalItem(props)
     return (
         <ListItem
             button
+           
             className={clsx(classes.item, listItemPadding, 'list-item', active)}
             onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}
         >
             {item.icon && (
-                <Icon className="list-item-icon text-16 flex-shrink-0 mr-16" color="action">{item.icon}</Icon>
+                <Icon className="list-item-icon text-16 flex-shrink-0 mr-16" color="primary">{item.icon}</Icon>
             )}
-            <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14 list-item-text-primary'}}/>
+            <ListItemText className="list-item-text" primary={item.title} style={{color: "#000"}}classes={{primary: 'text-14 list-item-text-primary'}}/>
             {item.badge && (
                 <FuseNavBadge badge={item.badge}/>
             )}

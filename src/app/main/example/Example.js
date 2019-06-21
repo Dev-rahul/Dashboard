@@ -40,7 +40,7 @@ function renderTabContent(tab, extensonList){
     if(tab.name === 'Dashboard') {
         return(<Dashboard/>)
     }
-    else if(tab.name === 'CQC') {
+    else if(tab.name === 'One Hour Summary') {
         return (<DataTable extensionList={extensonList}/>);
     } else if(tab.name === 'settings') {
         return (<h3> This is settings Component {JSON.stringify(extensonList)} </h3>);
@@ -80,6 +80,7 @@ function Example (props) {
         tabComponent = (
             <Tabs
             active={ activeTab }
+            color = "blue"
             onTabSwitch={ handleTabSwitch }
             onTabClose={ handleTabClose }
             onTabPositionChange={ handleTabPositionChange }

@@ -25,14 +25,15 @@ const useStyles = makeStyles(theme => ({
         width       : 'calc(100% - 16px)',
         borderRadius: '0 20px 20px 0',
         paddingRight: 12,
-        color       : theme.palette.text.primary,
+        color       : "#000",
         '&.square'  : {
             width       : '100%',
             borderRadius: '0'
         }
     },
     icon: {
-        display: "contents"
+        display: "contents",
+        color: "#000"
     }
 }));
 
@@ -97,7 +98,7 @@ function FuseNavVerticalCollapse(props)
         <div className={clsx(classes.item, classes.icon, listItemPadding, 'list-item', active)}
                 >
                 {item.icon && (
-                    <Icon color="action"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
+                    <Icon color="primary"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
                 )}
                 <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14'}}/>
                 {item.badge && (
@@ -110,7 +111,7 @@ function FuseNavVerticalCollapse(props)
             <div className={clsx(classes.item, classes.icon, listItemPadding, 'list-item', active)}
                 onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}>
                 {item.icon && (
-                    <Icon color="action"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
+                    <Icon color="primary"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
                 )}
                 <ListItemText className="list-item-text" primary={item.title} classes={{primary: 'text-14'}}/>
                 {item.badge && (
@@ -120,8 +121,8 @@ function FuseNavVerticalCollapse(props)
         )
     }
     let collapseIconComponent = (
-        <IconButton disableRipple className="w-16 h-16 p-0" onClick={handleClick}>
-        <Icon className="text-16 arrow-icon" color="inherit">
+        <IconButton disableRipple className="w-16 h-16 p-0"  onClick={handleClick}>
+        <Icon className="text-16 arrow-icon" color="primary">
             {open ? 'expand_less' : 'expand_more'}
         </Icon>
     </IconButton>

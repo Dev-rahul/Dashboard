@@ -170,7 +170,7 @@ class Dashboard extends Component {
                     }
     }
     componentWillUnmount() {
-        this.connection = null;
+        // this.connection = null;
     }
     
     render() {
@@ -188,18 +188,19 @@ class Dashboard extends Component {
           onLayoutChange={this.onLayoutChange}
           onResizeStop={this.onResize}
         >
-         <div key='1' data-grid={{ w: 12, minh: 4, h: 12, x: 0, y: 0, i: "1" }}>
-            <Paper className="w-full rounded-8 shadow-none border-1">
-                <div className="flex items-center justify-between px-16 py-16 border-b-1">
-                    <Typography className="text-16">Agents</Typography>
+         <div key='1' data-grid={{ w: 12, minH: 4, minW:6, h: 4, x: 0, y: 0, i: "1" }}>
+            <Paper className="w-full rounded-8 shadow-none border-1" style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
+                <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc"}}>
+                    <Typography className="text-16" style={{color: "#fff"}}>Agents</Typography>
                 </div>
-                <div className="flex flex-col flex-1 w-full">
-                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
+                <div className="flex flex-col flex-1 w-full" style={{height: "100%", width: "100%"}}>
+                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto " style={{height: "100%", width: "100%"}}>
                     <FuseAnimateGroup
                                         enter={{
                                             animation: "transition.slideUpBigIn"
                                         }}
-                                        className="flex flex-wrap py-24"
+                                        className="flex flex-wrap px-16"
+                                        
                                     >
                                      {this.state.agentList.map(function(agent, index){
                         
@@ -215,18 +216,18 @@ class Dashboard extends Component {
                 </div>
             </Paper>
             </div>
-            <div key='2' data-grid={{ w: 12, minh: 4, h: 20, x: 0, y: 32, i: "2" }}>
-            <Paper className="w-full rounded-8 shadow-none border-1">
-                <div className="flex items-center justify-between px-16 py-16 border-b-1">
+            <div key='2' data-grid={{w: 12, minH: 4, minW:6, h: 4, x: 0, y: 32, i: "2" }}>
+            <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
+                <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc"}}>
                     <Typography className="text-16">Queues</Typography>
                 </div>
-                <div className="flex flex-col flex-1 w-full">
-                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
+                <div className="flex flex-col flex-1 w-full" style={{height: "100%", width: "100%"}}>
+                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto " style={{height: "100%", width: "100%"}}>
                     <FuseAnimateGroup
                                         enter={{
                                             animation: "transition.slideUpBigIn"
                                         }}
-                                        className="flex flex-wrap py-24"
+                                        className="flex flex-wrap py-16"
                                     >
                                      {this.state.queueList.map(function(queue, index){
                         
@@ -241,18 +242,18 @@ class Dashboard extends Component {
                 </div>
             </Paper>
             </div>
-            <div key='3' data-grid={{ w: 12, minh: 4, h: 12, x: 0, y: 64, i: "3" }}>
-            <Paper className="w-full rounded-8 shadow-none border-1">
-                <div className="flex items-center justify-between px-16 py-16 border-b-1">
+            <div key='3' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 64, i: "3" }}>
+            <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
+                <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc"}}>
                     <Typography className="text-16">Agent Disribution</Typography>
                 </div>
-                <div className="flex flex-col flex-1 w-full MyDraggableCancel" >
-                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
+                <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
+                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 ">
                     <FuseAnimateGroup
                                         enter={{
                                             animation: "transition.slideUpBigIn"
                                         }}
-                                        className="flex flex-wrap py-24"
+                                        className="flex flex-wrap "
                                     >
                                     <AgentDistribution agentData={this.state.agentList}/>
                     </FuseAnimateGroup>
@@ -265,12 +266,12 @@ class Dashboard extends Component {
             </Paper>
             </div>
 
-            <div key='4' data-grid={{ w: 12, minh: 4, h: 12, x: 0, y: 96, i: "4" }}>
-            <Paper className="w-full rounded-8 shadow-none border-1">
-                <div className="flex items-center justify-between px-16 py-16 border-b-1">
+            <div key='4' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 96, i: "4" }}>
+            <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
+                <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc"}}>
                     <Typography className="text-16">Calls And Agents</Typography>
                 </div>
-                <div className="flex flex-col flex-1 w-full MyDraggableCancel" >
+                <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
                     <FuseAnimateGroup
                                         enter={{

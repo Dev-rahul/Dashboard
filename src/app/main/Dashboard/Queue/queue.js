@@ -57,11 +57,13 @@ function Queue (props) {
     }
     
     return (
-        <div className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16" key={props.queueData.extension}>
-            <Card elevation={1} className={clsx(classes[queueStatus], "flex flex-col h-256")}>
+        <div className="w-full pb-24 sm:w-1/2 lg:w-1/4 sm:p-16"  key={props.queueData.extension}>
+            <Card elevation={1} className={clsx(classes[queueStatus], "flex flex-col h-256")}
+             style={{borderRadius: "10px",   height: "100%",width: "100%"}}>
                 <div
-                    className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+                    className="flex flex-shrink-0 items-center justify-between px-24 h-48"
                     style={{
+                        height: "30%",width: "100%",
                         
                         color     : 'black'
                     }}
@@ -69,12 +71,18 @@ function Queue (props) {
                     <Typography className="font-medium truncate" color="inherit">{props.queueData.name}</Typography>
 
                 </div>
-                <CardContent className="flex flex-col flex-auto items-center justify-right">
+                <CardContent className="flex flex-col  items-center justify-right"
+                style={{
+                    height: "50%",width: "100%"
+                }}>
                     <Typography className="text-center text-16 font-400">{props.queueData.extension}</Typography>
                     
                 </CardContent>
                 <Divider/>
-                <CardActions className="justify-center">
+                <CardActions className="justify-center"
+                style={{
+                    height: "20%",width: "100%"
+                }}>
                                                        
                     <Typography className="font-medium truncate" color="inherit">Call waiting</Typography>
                     <div className="flex items-center justify-center opacity-75">

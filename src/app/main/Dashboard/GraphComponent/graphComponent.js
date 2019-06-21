@@ -57,7 +57,7 @@ export default class ClusteredBarChart extends React.Component {
     const {series, lastDrawLocation} = this.state;
 
     return (
-      <div>
+      <div style={{height: "100%", width: "100%"}}>
        
         <XYPlot
             xType="ordinal"
@@ -74,8 +74,8 @@ export default class ClusteredBarChart extends React.Component {
               lastDrawLocation.top
             ]
           }
-          width={900}
-          height={600}
+          width={950}
+          height={300}
         >
           
           <DiscreteColorLegend

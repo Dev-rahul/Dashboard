@@ -57,7 +57,9 @@ class Dashboard extends Component {
             queueList: [],
             upadte: false,
             layout: JSON.parse(JSON.stringify(originalLayout)),
-            connected: 'false'
+            connected: 'false',
+            divHeight: 400,
+            divWidth: 900
         }
           this.onLayoutChange = this.onLayoutChange.bind(this)
           this.resetLayout = this.resetLayout.bind(this)
@@ -76,12 +78,16 @@ class Dashboard extends Component {
         this.props.onLayoutChange(layout) // updates status display
       }
       onResize = args => {
-        console.log(args)
+        console.log('Resize!!!!!!',args)
+        console.log('shghgds', this.graphContainer.clientHeight)
+        this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
       }
 
 
 
     componentDidMount() {
+
+      this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
         this.connection = new WebSocket('ws://10.226.14.70:7778/6/sock');
         const sendData = JSON.stringify({
                     request: "fetch_agent_events"
@@ -177,7 +183,8 @@ class Dashboard extends Component {
       let culstedComponent = null;
       if(this.state.queueList.length>0) {
         culstedComponent = (
-          <ClusteredBarChart queueData={this.state.queueList}/>
+          <ClusteredBarChart queueData={this.state.queueList} graphHeight={this.state.divHeight}
+          graphWidth ={this.state.divWidth}/>
         )
       }
         return (
@@ -194,8 +201,11 @@ class Dashboard extends Component {
                     <Typography className="text-16" style={{color: "#fff"}}>Agents</Typography>
                 </div>
                 <div className="flex flex-col flex-1 w-full" style={{height: "100%", width: "100%"}}>
-                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto " style={{height: "100%", width: "100%"}}>
+                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto "
+                    
+                     style={{height: "100%", width: "100%"}}>
                     <FuseAnimateGroup
+                     
                                         enter={{
                                             animation: "transition.slideUpBigIn"
                                         }}
@@ -272,7 +282,9 @@ class Dashboard extends Component {
                     <Typography className="text-16">Calls And Agents</Typography>
                 </div>
                 <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
-                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
+                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24"
+                    style={{height: "100%", width: "100%"}}
+                    ref={ (graphContainer) => this.graphContainer = graphContainer}>
                     <FuseAnimateGroup
                                         enter={{
                                             animation: "transition.slideUpBigIn"

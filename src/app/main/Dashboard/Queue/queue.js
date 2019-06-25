@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 });
 
 function Queue (props) {
-    console.log('queueProps',props.queueData.current_calls)
+   // console.log('queueProps',props.queueData.current_calls)
     const classes = useStyles(props);
     let queueStatus = 'Idle';
     if(props.queueData.type === 'in_queue') {

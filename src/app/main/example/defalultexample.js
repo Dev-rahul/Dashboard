@@ -43,7 +43,7 @@ class DefaultExample extends Component {
                                 this.setState({agentList: responaeData.response});
                             }
                             if(responaeData.action === 'update_agent') {
-                                console.log("updateResponse", responaeData.response);
+                           //     console.log("updateResponse", responaeData.response);
 
                                 let tempAgentList = [...this.state.agentList];
                                  //console.log('tempQueList',tempQueList)
@@ -68,7 +68,7 @@ class DefaultExample extends Component {
                             if(responaeData.action === 'update_queue') {
                               //  console.log("UpdateQueueResponse", responaeData.response);
                                  let tempQueList = [...this.state.queueList];
-                                 console.log('tempQueList',tempQueList)
+                               //  console.log('tempQueList',tempQueList)
                                 
                                 
                                     responaeData.response.map(currQueue => {
@@ -84,7 +84,7 @@ class DefaultExample extends Component {
                                  
                                 
                                 this.setState({queueList: tempQueList });
-                                console.log('filteredItems',this.state.queueList);
+                              //  console.log('filteredItems',this.state.queueList);
                             }
                         }
                         

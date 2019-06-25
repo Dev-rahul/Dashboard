@@ -41,6 +41,7 @@ export default class ClusteredBarChart extends React.Component {
   // }
 
   componentDidMount() {
+    console.log("qwerty")
     let callwaiting = [], callsConnected =[], agentsReady =[], agentsInWrapUp =[],
     agentsInQueueCall =[], agentsBusy =[], agentsAway =[];
     this.props.queueData.map((queue, index) => {
@@ -90,12 +91,63 @@ export default class ClusteredBarChart extends React.Component {
       cluster :'agentsState',
     }];
   };
+  componentDidUpdate() {
+    console.log("update",this.props);
+    let callwaiting = [], callsConnected =[], agentsReady =[], agentsInWrapUp =[],
+    agentsInQueueCall =[], agentsBusy =[], agentsAway =[];
+    this.props.queueData.map((queue, index) => {
+        
+      callwaiting.push({x: index, xa:queue.name, y: queue.calls_waiting});
+      callsConnected.push({x: index, xa: queue.name, y: queue.calls_connected});
+      agentsReady.push({x:index, xa: queue.name, y: queue.agents_ready});
+      agentsInWrapUp.push({x: index,xa: queue.name, y: queue.agents_in_wrapup});
+      agentsInQueueCall.push({x: index, xa: queue.name, y: queue.agents_in_queue_call});
+      agentsBusy.push({x: index, xa: queue.name, y: queue.agents_busy});
+      agentsAway.push({x: index, xa: queue.name, y: queue.agents_away});
+    })
+
+    this.data = [{
+      data : callwaiting,
+      title : 'callsWaiting',
+      cluster :'callsWaiting'
+    },
+    {
+      data : callsConnected,
+      title : 'callsConnected',
+      cluster :'callsConnected',
+    },
+    {
+      data : agentsReady,
+      title : 'agentsReady',
+      cluster :'agentsState',
+    },
+    {
+      data : agentsInWrapUp,
+      title : 'agentsInWrapUp',
+      cluster :'agentsState',
+    },
+    {
+      data : agentsInQueueCall,
+      title : 'agentsInQueueCall',
+      cluster :'agentsState',
+    },
+    {
+      data : agentsBusy,
+      title : 'agentsBusy',
+      cluster :'agentsState',
+    },
+    {
+      data : agentsAway,
+      title : 'agentsAway',
+      cluster :'agentsState',
+    }];
+  }
 
 
   render() {
 
 
-      console.log('queueData in graph', this.data);
+      console.log('queueData in graph');
       const {useCanvas} = this.state;
       const BarSeries = useCanvas ? VerticalBarSeriesCanvas : VerticalBarSeries;
       const content = useCanvas ? 'TOGGLE TO SVG' : 'TOGGLE TO CANVAS';

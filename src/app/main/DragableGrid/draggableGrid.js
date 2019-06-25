@@ -40,7 +40,7 @@ class DraggableGrid extends React.PureComponent {
     this.props.onLayoutChange(layout) // updates status display
   }
   onResize = args => {
-    console.log(args)
+    //console.log(args)
   }
 
   render () {

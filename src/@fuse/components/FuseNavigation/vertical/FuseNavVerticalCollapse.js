@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     activeClass: {
-        background: 'blue'
+        background: '#157fcc'
     },
     icon: {
         display: "contents",
@@ -85,7 +85,6 @@ function FuseNavVerticalCollapse(props)
     if(item.active) {
         activeClass = 'activeClass';
     }
-    console.log('activeClass', activeClass)
     useEffect(() => {
         if ( needsToBeOpened(props.location, props.item) )
         {
@@ -100,10 +99,15 @@ function FuseNavVerticalCollapse(props)
     function OncolapseItemClickHandler(item) {
         dispatch(Actions.navbarCloseMobile(item.id))
         let updateItem = {...item};
-        console.log('updateItem', updateItem)
         updateItem.active = true;
         dispatch(Actions.resetNavigation());
         dispatch(Actions.updateNavigationItem(updateItem.id, updateItem));
+        if(updateItem.id === 'Dashboard') {
+            updateItem.children.map(childItem => {
+                childItem.active = false;
+                dispatch(Actions.updateNavigationItem(childItem.id, childItem));
+            })
+        }
     }
     
 

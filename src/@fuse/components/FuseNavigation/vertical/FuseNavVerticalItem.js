@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         textDecoration             : 'none!important'
     },
     active: {
-        backgroundColor: 'blue'
+        backgroundColor: '#157fcc'
     }
 }));
 

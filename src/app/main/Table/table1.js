@@ -51,7 +51,7 @@ function DataTable (props) {
  
 
 
-  console.log('datataa', props)
+  //console.log('datataa', props)
 
 
 
@@ -90,10 +90,10 @@ function DataTable (props) {
   }
 
   const handleChange = name => event => {
-    console.log('onCick',event.target.checked)
+   // console.log('onCick',event.target.checked)
     setcolumnFilter({ ...columnFilter, [name]: event.target.checked });
     const index = columns.map(e => e.accessor).indexOf(name);
-    console.log(columnFilter)
+   // console.log(columnFilter)
     handleShow(index);
   };
 

@@ -60,14 +60,27 @@ const navbar = function (state = initialState, action) {
                     find = true;
                 }
             })
+            if(action.tabName === 'Dashboard') {
+                index = 0;
+            }
             if(!find) {
-                tabList.push({name: action.tabName, index: index});
+                if(action.tabName === 'Dashboard') {
+                    tabList.unshift({name: action.tabName, index: index});
+                    tabList.map((tab, i) => {
+                       
+                            tab.index= i;
+                        
+                    })
+                } else {
+                    tabList.push({name: action.tabName, index: index});
+                }
+               
                 activeTab = index;
             } else {
-              //  activeTab = 
+             // console.log("find false", tabList, action.tabName)
             }
             
-            console.log(tabList);
+         //   console.log(tabList);
             return {
                 ...state,
                 mobileOpen: true,
@@ -85,6 +98,9 @@ const navbar = function (state = initialState, action) {
             let tabList = [...state.tabs];
             let activeTab = state.activeTab;
             tabList.splice(action.index, 1);
+            tabList.map((tab, i) => {
+                tab.index = i;
+            })
 
 		    if(activeTab >= tabList.length) {
                 activeTab = tabList.length - 1;

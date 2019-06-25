@@ -28,7 +28,6 @@ const useStyles = makeStyles({
 
 function AgentDistributionTable (props) {
   const [distributionData, setAgentDistributionData] = useState([]);
-  console.log('agentDisribution Data', props.agentData);
   let dataToBeAdded_agents = [];
   props.agentData.map(agent => {
 
@@ -100,8 +99,6 @@ function AgentDistributionTable (props) {
  
 
 
-  console.log('datataa', props)
-
 
 
   const Precolumns = [
@@ -146,7 +143,6 @@ function AgentDistributionTable (props) {
  
 
   const handleChange = (name, index) => event => {
-    console.log('1234567890',index)
     let newColumns = [...columns]
     newColumns[index].show = !newColumns[index].show
     setColumns(newColumns);

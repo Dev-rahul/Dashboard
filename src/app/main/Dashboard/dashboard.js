@@ -19,7 +19,7 @@ import ClusteredBarChart from './GraphComponent/graphComponent';
 import RGL, { WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css';
 const ReactGridLayout = WidthProvider(RGL)
-const originalLayout = getFromLS('layout') || []
+let originalLayout = getFromLS('layout') || []
 
 
 //const useForceUpdate = () => useState()[1];
@@ -51,6 +51,8 @@ class Dashboard extends Component {
 
     connection = null;
     constructor(props) {
+    //  console.log("1234567890");
+      originalLayout = getFromLS('layout') || []
         super(props);
         this.state = {
             agentList: [],
@@ -84,6 +86,7 @@ class Dashboard extends Component {
 
 
     componentDidMount() {
+      console.log(this.props.settings)
 
       this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
       //   this.connection = new WebSocket('ws://10.226.14.70:7778/6/sock');
@@ -167,8 +170,19 @@ class Dashboard extends Component {
     componentWillUnmount() {
         // this.connection = null;
     }
+    shouldComponentUpdate(nextProps) {
+      if(this.props.settings !== nextProps.settings) {
+        this.forceUpdate();
+       
+      }
+      return true;
+    }
     
     render() {
+      let displayName = 'Agents';
+      if(this.props.settings) {
+        displayName = 'A'
+      }
       let culstedComponent = null;
       if(this.props.queueData.length>0) {
         culstedComponent = (
@@ -177,19 +191,24 @@ class Dashboard extends Component {
         )
       }
         return (
+
              <ReactGridLayout
           {...this.props}
           layout={this.state.layout}
           draggableCancel=".MyDraggableCancel" 
           onLayoutChange={this.onLayoutChange}
           onResizeStop={this.onResize}
+          
+
         >
-         <div key='1' data-grid={{ w: 12, minH: 4, minW:6, h: 4, x: 0, y: 0, i: "1" }}>
+         <div key='1' data-grid={{ w: 12, minH: 4, minW:6, h: 4, x: 0, y: 0, i: "1" }} >
+        
             <Paper className="w-full rounded-8 shadow-none border-1" style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
                     <Typography className="text-16" style={{color: "#fff"}}>Agents</Typography>
+                    
                 </div>
-                <div className="flex flex-col flex-1 w-full" style={{height: "100%", width: "100%"}}>
+                <div className="flex flex-col flex-1 w-full" style={{height: "75%", width: "100%", overflow: "auto"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto "
                     
                      style={{height: "100%", width: "100%"}}>
@@ -218,9 +237,9 @@ class Dashboard extends Component {
             <div key='2' data-grid={{w: 12, minH: 4, minW:6, h: 4, x: 0, y: 32, i: "2" }}>
             <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
-                    <Typography className="text-16">Queues</Typography>
+                    <Typography className="text-16" style={{color: "#fff"}}>Queues</Typography>
                 </div>
-                <div className="flex flex-col flex-1 w-full" style={{height: "100%", width: "100%"}}>
+                <div className="flex flex-col flex-1 w-full" style={{height: "75%", width: "100%", overflow: "auto"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto " style={{height: "100%", width: "100%"}}>
                     <FuseAnimateGroup
                                         enter={{
@@ -244,7 +263,7 @@ class Dashboard extends Component {
             <div key='3' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 64, i: "3" }}>
             <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
-                    <Typography className="text-16">Agent Disribution</Typography>
+                    <Typography className="text-16" style={{color: "#fff"}}>Agent Disribution</Typography>
                 </div>
                 <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 ">
@@ -268,7 +287,7 @@ class Dashboard extends Component {
             <div key='4' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 96, i: "4" }}>
             <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
-                    <Typography className="text-16">Calls And Agents</Typography>
+                    <Typography className="text-16" style={{color: "#fff"}}>Calls And Agents</Typography>
                 </div>
                 <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24"
@@ -291,6 +310,7 @@ class Dashboard extends Component {
                 </div>
             </Paper>
             </div>
+            
 
             
             </ReactGridLayout>

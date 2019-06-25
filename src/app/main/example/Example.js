@@ -13,6 +13,7 @@ import Dashboard from '../Dashboard/dashboard';
 import DraggableGrid from '../DragableGrid/draggableGrid';
 import ExtensionTable from '../Table/table';
 import DataTable from "../Table/table1";
+import Websocket from '../websocket';
 
 
 
@@ -35,10 +36,10 @@ const useStyles = makeStyles({
         zIndex  : 99
     }
 });
-function renderTabContent(tab, extensonList){
+function renderTabContent(tab, extensonList, props){
     console.log(tab);
     if(tab.name === 'Dashboard') {
-        return(<Dashboard/>)
+        return(<Dashboard agentData={props.agentList} queueData={props.queueList} />)
     }
     else if(tab.name === 'One Hour Summary') {
         return (<DataTable extensionList={extensonList}/>);
@@ -61,17 +62,64 @@ function Example (props) {
     const pageLayout = useRef(null);
     const tabList = useSelector(({fuse}) => fuse.navbar.tabs);
     const activeTab = useSelector(({fuse}) => fuse.navbar.activeTab);
+    const navItems = useSelector(({fuse}) => fuse.navigation);
+    console.log("navItems", navItems)
     function handleTabSwitch(active) {
+        let currentItem;
+       
         console.log("activeTab", active);
-        dispatch(Actions.handleTabChange(active))
+        navItems[0].children.map(item => {
+            if(item.id === tabList[active].name) {
+                currentItem = item;
+            } else {
+                if(item.children !== undefined) {
+                    item.children.map(childItem => {
+                        if(childItem.id === tabList[active].name) {
+                            currentItem = childItem;
+                        }
+                    })
+                }
+            }
+        })
+        
+        dispatch(Actions.handleTabChange(active));
+        
+        currentItem.active = true;
+        console.log(' currentItem',  currentItem);
+        dispatch(Actions.resetNavigation());
+        dispatch(Actions.updateNavigationItem(currentItem.id, currentItem));
+
+        
     }
     function handleTabClose(index) {
+        console.log('index', index, tabList[index]);
+        let currentItem;
+        navItems[0].children.map(item => {
+            if(item.id === tabList[index].name) {
+                currentItem = item;
+            } else {
+                if(item.children !== undefined) {
+                    item.children.map(childItem => {
+                        if(childItem.id === tabList[index].name) {
+                            currentItem = childItem;
+                        }
+                    })
+                }
+            }
+        })
+        console.log('currentItem', currentItem);
         dispatch(Actions.handleTabClose(index));
+        currentItem.active = false;
+        dispatch(Actions.resetNavigation());
+        dispatch(Actions.updateNavigationItem(currentItem.id, currentItem));
         forceUpdate();
+          
+            
     }
 
     function handleTabPositionChange(a, b) {
         dispatch(Actions.handleTabPositionChange(a, b));
+       
         forceUpdate();
     }
     
@@ -94,7 +142,7 @@ function Example (props) {
 								title={ value.name }
 								showClose={ true }
 							>
-								{renderTabContent(value, extensonList)}
+								{renderTabContent(value, extensonList, props)}
 							</Tab>
 						);
 					})

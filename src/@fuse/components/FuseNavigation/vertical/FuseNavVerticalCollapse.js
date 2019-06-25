@@ -11,6 +11,7 @@ import FuseNavVerticalGroup from './FuseNavVerticalGroup';
 import FuseNavVerticalItem from './FuseNavVerticalItem';
 import FuseNavBadge from './../FuseNavBadge';
 import FuseNavVerticalLink from './FuseNavVerticalLink';
+import { importNamespaceSpecifier } from '@babel/types';
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,6 +31,9 @@ const useStyles = makeStyles(theme => ({
             width       : '100%',
             borderRadius: '0'
         }
+    },
+    activeClass: {
+        background: 'blue'
     },
     icon: {
         display: "contents",
@@ -77,7 +81,11 @@ function FuseNavVerticalCollapse(props)
     const {item, nestedLevel, active} = props;
     let paddingValue = 40 + (nestedLevel * 16);
     const listItemPadding = nestedLevel > 0 ? 'pl-' + (paddingValue > 80 ? 80 : paddingValue) : 'pl-24';
-
+    let activeClass = '';
+    if(item.active) {
+        activeClass = 'activeClass';
+    }
+    console.log('activeClass', activeClass)
     useEffect(() => {
         if ( needsToBeOpened(props.location, props.item) )
         {
@@ -89,6 +97,15 @@ function FuseNavVerticalCollapse(props)
     {
         setOpen(!open);
     }
+    function OncolapseItemClickHandler(item) {
+        dispatch(Actions.navbarCloseMobile(item.id))
+        let updateItem = {...item};
+        console.log('updateItem', updateItem)
+        updateItem.active = true;
+        dispatch(Actions.resetNavigation());
+        dispatch(Actions.updateNavigationItem(updateItem.id, updateItem));
+    }
+    
 
     if ( !FuseUtils.hasPermission(item.auth, userRole) )
     {
@@ -109,7 +126,7 @@ function FuseNavVerticalCollapse(props)
     if(item.id === 'Dashboard') {
         collapsableComponent =(
             <div className={clsx(classes.item, classes.icon, listItemPadding, 'list-item', active)}
-                onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}>
+                onClick={ev => OncolapseItemClickHandler(item)} >
                 {item.icon && (
                     <Icon color="primary"  className="text-16 flex-shrink-0 mr-16">{item.icon}</Icon>
                 )}
@@ -135,7 +152,7 @@ function FuseNavVerticalCollapse(props)
 
             <ListItem
                 button
-                
+                className={classes[activeClass]}
                 
             >
                 {collapsableComponent}

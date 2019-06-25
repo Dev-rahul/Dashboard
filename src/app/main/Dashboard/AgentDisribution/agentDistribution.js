@@ -76,11 +76,15 @@ function AgentDistributionTable (props) {
   // const [filterMenuEl, setAnchorEl] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [columnFilter, setcolumnFilter] = React.useState({
-    firstname: true,
-    lastname: true,
-    extension: true,
-    status: true,
+    agent_name: true,
+    state: true,
+    queue: true,
+    caller_id: true,
+    queue_belongs: true,
+    day_handled: true,
+    day_missed: true
   });
+
 
 
   function handleClick(event) {
@@ -141,21 +145,21 @@ function AgentDistributionTable (props) {
 
  
 
-  const handleShow = index => {
-    console.log(index)
+  const handleChange = (name, index) => event => {
+    console.log('1234567890',index)
     let newColumns = [...columns]
     newColumns[index].show = !newColumns[index].show
     setColumns(newColumns);
+    setcolumnFilter({ ...columnFilter, [name]: event.target.checked });
     
   }
-
+/* 
   const handleChange = name => event => {
-    console.log('onCick',event.target.checked)
+    console.log('1234567890',name)
     setcolumnFilter({ ...columnFilter, [name]: event.target.checked });
     const index = columns.map(e => e.accessor).indexOf(name);
-    console.log(columnFilter)
     handleShow(index);
-  };
+  }; */
 
 
   return (
@@ -171,30 +175,21 @@ function AgentDistributionTable (props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}><FormControlLabel
+
+        {columns.map((data,index) =>  <MenuItem key={data.accessor}  onClick={handleClose}><FormControlLabel
         control={
-          <Checkbox checked={columnFilter.firstname} onChange={handleChange('firstname')} value="firstname" />
+          <Checkbox checked={columnFilter[data.accessor]} onChange={handleChange(data.accessor,index)} value={data.accessor} />
         }
-        label="First Name"
-      /></MenuItem>
-          <MenuItem onClick={handleClose}><FormControlLabel
-        control={
-          <Checkbox checked={columnFilter.lastname} onChange={handleChange('lastname')} value="lastname" />
-        }
-        label="Last Name"
-      /></MenuItem>
-          <MenuItem onClick={handleClose}><FormControlLabel
-        control={
-          <Checkbox checked={columnFilter.extension} onChange={handleChange('extension')} value="extension" />
-        }
-        label="Extension"
-      /></MenuItem>
+        label={data.Header}
+      /></MenuItem>)}
+
+{/* 
        <MenuItem onClick={handleClose}><FormControlLabel
         control={
           <Checkbox checked={columnFilter.status} onChange={handleChange('status')} value="status" />
         }
         label="Status"
-      /></MenuItem>
+      /></MenuItem> */}
       
         </Menu>            
                           
@@ -204,7 +199,7 @@ function AgentDistributionTable (props) {
         rows={dataToBeAdded_agents}
         columns={columns}
         className='-striped -highlight'
-        filterable
+        filterable = {false}
         show='true'
       />
 

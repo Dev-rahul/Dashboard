@@ -1,4 +1,4 @@
-import Example from './Example';
+import DefaultExample from './defalultexample';
 
 export const ExampleConfig = {
     settings: {
@@ -10,7 +10,7 @@ export const ExampleConfig = {
     routes  : [
         {
             path     : '/example',
-            component: Example
+            component: DefaultExample
         }
     ]
 };

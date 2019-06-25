@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
         width                      : 'calc(100% - 16px)',
         borderRadius               : '0 20px 20px 0',
         paddingRight               : 12,
+        
         '&.active'                 : {
             backgroundColor            : theme.palette.secondary.main,
             color                      : theme.palette.secondary.contrastText + '!important',
@@ -36,6 +37,9 @@ const useStyles = makeStyles(theme => ({
         color                      : theme.palette.text.primary,
         cursor                     : 'pointer',
         textDecoration             : 'none!important'
+    },
+    active: {
+        backgroundColor: 'blue'
     }
 }));
 
@@ -43,7 +47,7 @@ function FuseNavVerticalItem(props)
 {
     const dispatch = useDispatch();
     const userRole = useSelector(({auth}) => auth.user.role);
-
+    
     const classes = useStyles(props);
     const {item, nestedLevel, active} = props;
     let paddingValue = 40 + (nestedLevel * 16);
@@ -53,16 +57,29 @@ function FuseNavVerticalItem(props)
     {
         return null;
     }
+    let activeClass = '';
+    if(item.active) {
+        activeClass = 'active';
+    }
+    
+    function onClickItemHandler(item) {
+        dispatch(Actions.navbarCloseMobile(item.id));
+        let updateItem = {...item};
+        updateItem.active = true;
+        dispatch(Actions.resetNavigation());
+        dispatch(Actions.updateNavigationItem(updateItem.id, updateItem));
+        
+    }
 
     return (
         <ListItem
             button
            
-            className={clsx(classes.item, listItemPadding, 'list-item', active)}
-            onClick={ev => dispatch(Actions.navbarCloseMobile(item.id))}
+            className={clsx(classes.item, listItemPadding, 'list-item', classes[activeClass])}
+            onClick={ev => onClickItemHandler(item)}
         >
             {item.icon && (
-                <Icon className="list-item-icon text-16 flex-shrink-0 mr-16" color="primary">{item.icon}</Icon>
+                <Icon className="list-item-icon text-16 flex-shrink-0 mr-16 " color="primary">{item.icon}</Icon>
             )}
             <ListItemText className="list-item-text" primary={item.title} style={{color: "#000"}}classes={{primary: 'text-14 list-item-text-primary'}}/>
             {item.badge && (

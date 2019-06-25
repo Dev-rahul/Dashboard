@@ -114,11 +114,11 @@ export default class ClusteredBarChart extends React.Component {
             }
             
             width={this.props.graphWidth -50}
-            height={this.props.graphHeight - 100}
+            height={this.props.graphHeight -150}
           >
             
             <DiscreteColorLegend
-              style={{position: 'absolute', left: '50px', top: '-50px'}}
+              style={{  width: this.props.graphWidth-100}}
               orientation="horizontal"
               items={[
                 {

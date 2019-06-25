@@ -144,7 +144,7 @@ function DataTable (props) {
         rows={data}
         columns={columns}
         className='-striped -highlight'
-        filterable
+        filterable={false}
         show='true'
       />
 

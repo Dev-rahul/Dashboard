@@ -7,7 +7,7 @@ import reducer from '../../store/reducers';
 import withReducer from 'app/store/withReducer';
 import 'react-awesome-tabs/src/sass/react-awesome-tabs.scss';
 import axios from'axios';
-import {Typography, Paper, Button, Card, CardContent, Divider, CardActions, Icon, LinearProgress} from '@material-ui/core';
+import {Typography, Paper, Button, Card, CardContent, IconButton,Divider, Fab,CardActions, Icon, LinearProgress, MenuItem , Menu ,FormControlLabel, Checkbox} from '@material-ui/core';
 import { useCookies } from 'react-cookie';
 import {FuseAnimate, FuseAnimateGroup} from '@fuse';
 import Agents from './Agents/agents';
@@ -15,7 +15,7 @@ import Queue from './Queue/queue';
 import io from 'socket.io-client';
 import AgentDistribution from './AgentDisribution/agentDistribution';
 import ClusteredBarChart from './GraphComponent/graphComponent';
-
+import _ from 'lodash';
 import RGL, { WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css';
 const ReactGridLayout = WidthProvider(RGL)
@@ -61,7 +61,8 @@ class Dashboard extends Component {
             layout: JSON.parse(JSON.stringify(originalLayout)),
             connected: 'false',
             divHeight: 400,
-            divWidth: 900
+            divWidth: 900,
+            anchorMenu :null,
         }
           this.onLayoutChange = this.onLayoutChange.bind(this)
           this.resetLayout = this.resetLayout.bind(this)
@@ -75,7 +76,12 @@ class Dashboard extends Component {
       }
     
       onLayoutChange = layout => {
-        saveToLS('layout', layout)
+        // saveToLS('layout', layout)
+        if(layout[0].i===null||layout[1].i===null||layout[2].i===null||layout[3].i===null) {
+          
+        } else {
+          saveToLS('layout', layout)
+        }
         this.setState({ layout })
         this.props.onLayoutChange(layout) // updates status display
       }
@@ -190,23 +196,15 @@ class Dashboard extends Component {
           graphWidth ={this.state.divWidth}/>
         )
       }
-        return (
 
-             <ReactGridLayout
-          {...this.props}
-          layout={this.state.layout}
-          draggableCancel=".MyDraggableCancel" 
-          onLayoutChange={this.onLayoutChange}
-          onResizeStop={this.onResize}
-          
-
-        >
-         <div key='1' data-grid={{ w: 12, minH: 4, minW:6, h: 4, x: 0, y: 0, i: "1" }} >
+      const agents = (
+        <div key='1' data-grid={{ w: 12, minH: 4, minW:6, h: 4, x: 0, y: 0, i: "1" }} >
         
             <Paper className="w-full rounded-8 shadow-none border-1" style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
                     <Typography className="text-16" style={{color: "#fff"}}>Agents</Typography>
-                    
+                    <IconButton size="small" color="secondary"  onClick={this.props.closeButton('agents')}><Icon>close</Icon>
+                    </IconButton>
                 </div>
                 <div className="flex flex-col flex-1 w-full" style={{height: "75%", width: "100%", overflow: "auto"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto "
@@ -225,19 +223,18 @@ class Dashboard extends Component {
                         return <Agents key={index} agentData={agent}/>
                       })}
                     </FuseAnimateGroup>
-                    {/* <Agents/> */}
-    
-                   
-                       
-                        
                     </div>
                 </div>
             </Paper>
             </div>
-            <div key='2' data-grid={{w: 12, minH: 4, minW:6, h: 4, x: 0, y: 32, i: "2" }}>
+      );
+      const queues = (
+        <div key='2' data-grid={{w: 12, minH: 4, minW:6, h: 4, x: 0, y: 32, i: "2" }}>
             <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
                     <Typography className="text-16" style={{color: "#fff"}}>Queues</Typography>
+                    <IconButton size="small" color="secondary"  onClick={this.props.closeButton('queues')}><Icon>close</Icon>
+                    </IconButton>
                 </div>
                 <div className="flex flex-col flex-1 w-full" style={{height: "75%", width: "100%", overflow: "auto"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto " style={{height: "100%", width: "100%"}}>
@@ -252,18 +249,18 @@ class Dashboard extends Component {
                                          return <Queue key={index} queueData={queue}/>
                                     })}
                     </FuseAnimateGroup>
-    
-                   
-                       
-                        
                     </div>
                 </div>
             </Paper>
             </div>
-            <div key='3' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 64, i: "3" }}>
+      );
+      const agentDistribution = (
+        <div key='3' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 64, i: "3" }}>
             <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
                 <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
                     <Typography className="text-16" style={{color: "#fff"}}>Agent Disribution</Typography>
+                    <IconButton size="small" color="secondary"  onClick={this.props.closeButton('agentDistribution')}><Icon>close</Icon>
+                    </IconButton>
                 </div>
                 <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
                     <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 ">
@@ -275,46 +272,64 @@ class Dashboard extends Component {
                                     >
                                     <AgentDistribution agentData={this.props.agentData}/>
                     </FuseAnimateGroup>
-    
-                   
-                       
-                        
                     </div>
                 </div>
             </Paper>
             </div>
-
-            <div key='4' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 96, i: "4" }}>
-            <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
-                <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
-                    <Typography className="text-16" style={{color: "#fff"}}>Calls And Agents</Typography>
-                </div>
-                <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
-                    <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24"
-                    style={{height: "100%", width: "100%"}}
-                    ref={ (graphContainer) => this.graphContainer = graphContainer}>
-                    <FuseAnimateGroup
-                                        enter={{
-                                            animation: "transition.slideUpBigIn"
-                                        }}
-                                        className="flex flex-wrap py-24"
-                                    >
-                                    {culstedComponent}
-                                    
-                    </FuseAnimateGroup>
-    
-                   
-                       
-                        
-                    </div>
-                </div>
-            </Paper>
+      )
+      const callsAndAgents = (
+        <div key='4' data-grid={{ w: 12, minH: 8, minW:6, h: 8, x: 0, y: 96, i: "4" }}>
+        <Paper className="w-full rounded-8 shadow-none border-1"  style={{borderColor:"#157fcc", borderRadius: 4, borderWidth: 5, height: "100%", width: "100%"}}>
+            <div className="flex items-center justify-between px-8 py-8 border-b-1" style={{background: "#157fcc", cursor: "crosshair"}}>
+                <Typography className="text-16" style={{color: "#fff"}}>Calls And Agents</Typography>
+                <IconButton size="small" color="secondary"  onClick={this.props.closeButton('callsAndAgents')}><Icon>close</Icon>
+                    </IconButton>
             </div>
-            
-
-            
-            </ReactGridLayout>
-        )
+            <div className="flex flex-col flex-1 w-full MyDraggableCancel" style={{height: "100%", width: "100%"}}>
+                <div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24"
+                style={{height: "100%", width: "100%"}}
+                ref={ (graphContainer) => this.graphContainer = graphContainer}>
+                <FuseAnimateGroup
+                                    enter={{
+                                        animation: "transition.slideUpBigIn"
+                                    }}
+                                    className="flex flex-wrap py-24"
+                                >
+                                {culstedComponent}
+                                
+                </FuseAnimateGroup>   
+                </div>
+            </div>
+        </Paper>
+        </div>
+      )
+      return (
+        <div>
+        <div style={{marginLeft: "90%"}}>
+        <Fab  onClick={this.resetLayout}
+        size="small"
+        color="secondary">
+        <Icon>restore</Icon>
+        </Fab>
+       {/* <Button  variant="contained" >
+      Reset Layout
+      </Button>       */}
+     </div>
+     
+           <ReactGridLayout
+        {...this.props}
+        layout={this.state.layout}
+        draggableCancel=".MyDraggableCancel" 
+        onLayoutChange={this.onLayoutChange}
+        onResizeStop={this.onResize}
+      >
+       {this.props.dashboardItems.agents ? agents : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "5",static: true }}></div>}
+      {this.props.dashboardItems.queues ? queues : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "6",static: true }}></div>}
+      {this.props.dashboardItems.agentDistribution ? agentDistribution : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "7",static: true }}></div>}
+      {this.props.dashboardItems.callsAndAgents ? callsAndAgents : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "8",static: true }}></div>}
+       </ReactGridLayout>
+          </div>
+      )
     }
     
 }

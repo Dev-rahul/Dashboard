@@ -45,14 +45,36 @@ export default class ClusteredBarChart extends React.Component {
     let callwaiting = [], callsConnected =[], agentsReady =[], agentsInWrapUp =[],
     agentsInQueueCall =[], agentsBusy =[], agentsAway =[];
     this.props.queueData.map((queue, index) => {
-        
-      callwaiting.push({x: index, xa:queue.name, y: queue.calls_waiting});
-      callsConnected.push({x: index, xa: queue.name, y: queue.calls_connected});
-      agentsReady.push({x:index, xa: queue.name, y: queue.agents_ready});
-      agentsInWrapUp.push({x: index,xa: queue.name, y: queue.agents_in_wrapup});
-      agentsInQueueCall.push({x: index, xa: queue.name, y: queue.agents_in_queue_call});
-      agentsBusy.push({x: index, xa: queue.name, y: queue.agents_busy});
-      agentsAway.push({x: index, xa: queue.name, y: queue.agents_away});
+      let calls_waiting = 0, calls_connected = 0,agents_ready = 0, agents_in_wrapup= 0;
+        let agents_in_queue_call = 0, agents_busy= 0, agents_away = 0;
+        if(queue.calls_waiting !== undefined) {
+          calls_waiting = queue.calls_waiting;
+        }
+        if(queue.calls_connected !== undefined) {
+          calls_connected = queue.calls_connected;
+        }
+        if(queue.agents_ready !== undefined) {
+          agents_ready = queue.agents_ready;
+        }
+        if(queue.agents_in_wrapup !== undefined) {
+          agents_in_wrapup = queue.agents_in_wrapup;
+        }
+        if(queue.agents_in_queue_call !== undefined) {
+          agents_in_queue_call = queue.agents_in_queue_call;
+        }
+        if(queue.agents_busy !== undefined) {
+          agents_busy = queue.agents_busy;
+        }
+        if(queue.agents_away !== undefined) {
+          agents_away = queue.agents_away;
+        }
+      callwaiting.push({x: index, xa:queue.name, y: calls_waiting});
+      callsConnected.push({x: index, xa: queue.name, y: calls_connected});
+      agentsReady.push({x:index, xa: queue.name, y: agents_ready});
+      agentsInWrapUp.push({x: index,xa: queue.name, y: agents_in_wrapup});
+      agentsInQueueCall.push({x: index, xa: queue.name, y: agents_in_queue_call});
+      agentsBusy.push({x: index, xa: queue.name, y: agents_busy});
+      agentsAway.push({x: index, xa: queue.name, y: agents_away});
     })
 
     this.data = [{
@@ -92,18 +114,40 @@ export default class ClusteredBarChart extends React.Component {
     }];
   };
   componentDidUpdate() {
-    console.log("update",this.props);
+   // console.log("update",this.props);
     let callwaiting = [], callsConnected =[], agentsReady =[], agentsInWrapUp =[],
     agentsInQueueCall =[], agentsBusy =[], agentsAway =[];
     this.props.queueData.map((queue, index) => {
-        
-      callwaiting.push({x: index, xa:queue.name, y: queue.calls_waiting});
-      callsConnected.push({x: index, xa: queue.name, y: queue.calls_connected});
-      agentsReady.push({x:index, xa: queue.name, y: queue.agents_ready});
-      agentsInWrapUp.push({x: index,xa: queue.name, y: queue.agents_in_wrapup});
-      agentsInQueueCall.push({x: index, xa: queue.name, y: queue.agents_in_queue_call});
-      agentsBusy.push({x: index, xa: queue.name, y: queue.agents_busy});
-      agentsAway.push({x: index, xa: queue.name, y: queue.agents_away});
+        let calls_waiting = 0, calls_connected = 0,agents_ready = 0, agents_in_wrapup= 0;
+        let agents_in_queue_call = 0, agents_busy= 0, agents_away = 0;
+        if(queue.calls_waiting !== undefined) {
+          calls_waiting = queue.calls_waiting;
+        }
+        if(queue.calls_connected !== undefined) {
+          calls_connected = queue.calls_connected;
+        }
+        if(queue.agents_ready !== undefined) {
+          agents_ready = queue.agents_ready;
+        }
+        if(queue.agents_in_wrapup !== undefined) {
+          agents_in_wrapup = queue.agents_in_wrapup;
+        }
+        if(queue.agents_in_queue_call !== undefined) {
+          agents_in_queue_call = queue.agents_in_queue_call;
+        }
+        if(queue.agents_busy !== undefined) {
+          agents_busy = queue.agents_busy;
+        }
+        if(queue.agents_away !== undefined) {
+          agents_away = queue.agents_away;
+        }
+      callwaiting.push({x: index, xa:queue.name, y: calls_waiting});
+      callsConnected.push({x: index, xa: queue.name, y: calls_connected});
+      agentsReady.push({x:index, xa: queue.name, y: agents_ready});
+      agentsInWrapUp.push({x: index,xa: queue.name, y: agents_in_wrapup});
+      agentsInQueueCall.push({x: index, xa: queue.name, y: agents_in_queue_call});
+      agentsBusy.push({x: index, xa: queue.name, y: agents_busy});
+      agentsAway.push({x: index, xa: queue.name, y: agents_away});
     })
 
     this.data = [{
@@ -141,6 +185,7 @@ export default class ClusteredBarChart extends React.Component {
       title : 'agentsAway',
       cluster :'agentsState',
     }];
+    console.log("data graph", this.data)
   }
 
 

@@ -38,6 +38,15 @@ const useStyles = makeStyles({
     },
     Busy: {
         background: '#B83900'
+    },
+    Available : {
+        background: "#22B3A8"
+    },
+    inBoundCall: {
+        background: "#034895"
+    },
+    inWrapUp: {
+        background: "#31C3E9"
     }
 
 });
@@ -45,9 +54,44 @@ const useStyles = makeStyles({
 function Agents (props) {
     // console.log('agent',props)
     const classes = useStyles(props);
+    let agentStatus = "Idle";
+    if(props.agentData.status === 'Busy') {
+        if(props.agentData.on_a_call === 2 || props.agentData.on_a_call === 4 || props.agentData.on_a_call === 3 ) {
+         
+            agentStatus = 'Available';
+        } else if( props.agentData.on_a_call === 1) {
+            agentStatus = 'inBoundCall';
+        } else if( props.agentData.on_a_wrapup === 1) {
+            agentStatus = 'inWrapUp';
+        } else {
+            agentStatus = 'Busy';
+        }
+    } else  if(props.agentData.status === 'Away'){
+        agentStatus = 'Away';
+    } else  if(props.agentData.status === 'Idle'){
+        
+        if( props.agentData.on_a_call > 0) {
+            agentStatus = "inBoundCall"
+        } else if(props.agentData.on_a_wrapup > 0) {
+            agentStatus = "inWrapUp";
+        } else {
+            if(props.agentData.state === 'Ready') {
+                agentStatus = "Ready";
+            } else {
+                agentStatus = 'Away';
+            }
+        }
+    } else {
+        if(props.agentData.on_a_call === 2 || props.agentData.on_a_call === 4) {
+            agentStatus = 'Available';
+        }
+    }
+    console.log("agentStatus", agentStatus)
+
+
     return (
         <div className="w-full pb-24 sm:w-1/2 lg:w-1/4 sm:p-16"  key={props.agentData.extension} >
-            <Card elevation={1} className={clsx(classes[props.agentData.status], "flex flex-col h-256")} 
+            <Card elevation={1} className={clsx(classes[agentStatus], "flex flex-col h-256")} 
             style={{borderRadius: "10px", height: "100%",width: "100%" }}>
                 <div
                     className="flex flex-shrink-0 items-center justify-between px-24 h-48"
@@ -56,14 +100,14 @@ function Agents (props) {
                         color : 'black'
                     }}
                     >
-                    <Typography className="font-medium truncate" color="inherit">{props.agentData.firstName + ' '+ props.agentData.lastName}</Typography>
+                    <Typography className="font-medium truncate" color="inherit" style={{color: "#fff"}}>{props.agentData.firstName + ' '+ props.agentData.lastName}</Typography>
 
                 </div>
                 <CardContent className="flex flex-col items-center justify-right"
                 style={{
                     height: "50%",width: "100%"
                 }}>
-                    <Typography className="text-center text-16 font-400">{props.agentData.extension}</Typography>
+                    <Typography className="text-center text-16 font-400"  style={{color: "#fff"}}>{props.agentData.extension}</Typography>
                     
                 </CardContent>
                 <Divider/>
@@ -73,7 +117,7 @@ function Agents (props) {
                                                        
                     
                     <div className="flex items-center justify-center opacity-75">
-                        <Icon className="text-20 mr-8" color="inherit">access_time</Icon>
+                        <Icon className="text-20 mr-8" color="inherit"  style={{color: "#fff"}}>access_time</Icon>
                        <Timer timeInSecond={0}/>
                     </div>
                                                       

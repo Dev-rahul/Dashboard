@@ -30,7 +30,10 @@ const useStyles = makeStyles({
         background: '#F2F2F2'
     },
     in_queue: {
-        background: '#2C7D26'
+        background: '#31C3E9'
+    },
+    available: {
+        background: "#2C7D26"
     },
     out_queue: {
         background: '#EDD6B4'
@@ -45,12 +48,13 @@ function Queue (props) {
    // console.log('queueProps',props.queueData.current_calls)
     const classes = useStyles(props);
     let queueStatus = 'Idle';
-    if(props.queueData.type === 'in_queue') {
-        if(props.queueData.current_calls.length > 0) {
+    if(props.queueData.type === 'in_queue' && props.queueData.calls_waiting > 0) {
+        // if(props.queueData.current_calls.length > 0) {
             queueStatus = 'in_queue' ;
-        }
-    }
-    if(props.queueData.type === 'out_queue') {
+       // }
+    } else if(props.queueData.type === 'in_queue') {
+        queueStatus = 'available';
+    } else if(props.queueData.type === 'out_queue') {
         if(props.queueData.current_calls.length > 0) {
             queueStatus = 'out_queue' ;
         }
@@ -68,14 +72,14 @@ function Queue (props) {
                         color     : 'black'
                     }}
                     >
-                    <Typography className="font-medium truncate" color="inherit">{props.queueData.name}</Typography>
+                    <Typography className="font-medium truncate" color="inherit" style={{color: "#fff"}}>{props.queueData.name}</Typography>
 
                 </div>
                 <CardContent className="flex flex-col  items-center justify-right"
                 style={{
                     height: "50%",width: "100%"
                 }}>
-                    <Typography className="text-center text-16 font-400">{props.queueData.extension}</Typography>
+                    <Typography className="text-center text-16 font-400"  style={{color: "#fff"}}>{props.queueData.extension}</Typography>
                     
                 </CardContent>
                 <Divider/>
@@ -84,10 +88,10 @@ function Queue (props) {
                     height: "20%",width: "100%"
                 }}>
                                                        
-                    <Typography className="font-medium truncate" color="inherit">Call waiting</Typography>
+                    <Typography className="font-medium truncate" color="inherit"  style={{color: "#fff"}}>Call waiting</Typography>
                     <div className="flex items-center justify-center opacity-75">
-                        <Icon className="text-20 mr-8" color="inherit">access_time</Icon>
-                        <div className="text-16 whitespace-no-wrap">3 min</div>
+                        <Icon className="text-20 mr-8" color="inherit"  style={{color: "#fff"}}>access_time</Icon>
+                        <div className="text-16 whitespace-no-wrap"  style={{color: "#fff"}}>3 min</div>
                     </div>
                                                       
                 </CardActions>

@@ -28,7 +28,7 @@ function Timer (props) {
    
 
         return (
-            <span >{timeToShow}</span>
+            <span  style={{color: "#fff"}}>{timeToShow}</span>
         )
 }
 export default withReducer('Timer', reducer)(Timer);

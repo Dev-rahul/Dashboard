@@ -86,92 +86,18 @@ class Dashboard extends Component {
         this.props.onLayoutChange(layout) // updates status display
       }
       onResize = args => {
-        this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
+        if(this.graphContainer) {
+          this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
+        } 
       }
 
 
 
     componentDidMount() {
       console.log(this.props.settings)
-
-      this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
-      //   this.connection = new WebSocket('ws://10.226.14.70:7778/6/sock');
-      //   const sendData = JSON.stringify({
-      //               request: "fetch_agent_events"
-      //           });
-            
-      //           const queue_sendData = JSON.stringify({
-      //               request: "fetch_queue_events"
-      //           });
-                
-      //   this.connection.onopen = () => {
-      //            this.setState({connected: true});
-      //           this.connection.send('panel_type:dashboard');
-      //           this.connection.send(queue_sendData);
-      //           this.connection.send(sendData);
-      //           setInterval( _ =>{
-      //               if(this.connection !== null && this.state.connected) {
-      //                 this.connection.send('ping');
-      //               }
-                 
-      // }, 5000 )
-      //          }
-      //          this.connection.onmessage = evt => { 
-      //                   if(evt.data !== 'pong') {
-      //                       const responaeData = JSON.parse(evt.data);
-      //                       if(responaeData.action === 'create_agent') {
-      //                           this.setState({agentList: responaeData.response});
-      //                       }
-      //                       if(responaeData.action === 'update_agent') {
-      //                           console.log("updateResponse", responaeData.response);
-
-      //                           let tempAgentList = [...this.state.agentList];
-                                
-                                
-      //                               responaeData.response.map(currAgent => {
-      //                                  let index = 0;
-      //                                  tempAgentList.map(agent => {
-      //                                      if(agent.extension === currAgent.extension) {
-      //                                        tempAgentList.splice(index, 1, currAgent);
-      //                                      }
-      //                                      index = index+ 1;
-      //                                   })
-      //                               })
-      //                           this.setState({agentList: tempAgentList});
-      //                       }
-      //                       if(responaeData.action === 'create_queue') {
-      //                           this.setState({queueList: responaeData.response});
-      //                       }
-      //                       if(responaeData.action === 'update_queue') {
-      //                            let tempQueList = [...this.state.queueList];
-      //                            console.log('tempQueList',tempQueList)
-                                
-                                
-      //                               responaeData.response.map(currQueue => {
-      //                                  let index = 0;
-      //                                   tempQueList.map(queue => {
-      //                                      if(queue.extension === currQueue.extension) {
-      //                                        tempQueList.splice(index, 1, currQueue);
-      //                                      }
-      //                                      index = index+ 1;
-      //                                   })
-      //                               })
-                                 
-                                
-      //                           this.setState({queueList: tempQueList });
-      //                           console.log('filteredItems',this.state.queueList);
-      //                       }
-      //                   }
-                        
-      //                 };
-
-                   
-
-
-      //               this.connection.onclose = () => {
-      //                       this.connection = null;
-      //                       this.setState({connected: false});
-      //               }
+      if(this.graphContainer) {
+        this.setState({divHeight: this.graphContainer.clientHeight, divWidth: this.graphContainer.clientWidth});
+      }
     }
     componentWillUnmount() {
         // this.connection = null;
@@ -323,10 +249,10 @@ class Dashboard extends Component {
         onLayoutChange={this.onLayoutChange}
         onResizeStop={this.onResize}
       >
-       {this.props.dashboardItems.agents ? agents : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "5",static: true }}></div>}
-      {this.props.dashboardItems.queues ? queues : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "6",static: true }}></div>}
-      {this.props.dashboardItems.agentDistribution ? agentDistribution : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "7",static: true }}></div>}
-      {this.props.dashboardItems.callsAndAgents ? callsAndAgents : <div data-grid={{ w: 0, h: 0, x: 0, y: 1, i: "8",static: true }}></div>}
+       {this.props.dashboardItems.agents ? agents : <div key="q" data-grid={{ w: 0, h: 0, minW: 0, minH: 0, x: 0, y: 1, i: "5",static: true }}></div>}
+      {this.props.dashboardItems.queues ? queues : <div key="w" data-grid={{ w: 0, h: 0, minW: 0, minH: 0,  x: 0, y: 1, i: "6",static: true }}></div>}
+      {this.props.dashboardItems.agentDistribution ? agentDistribution : <div key ="e" data-grid={{ w: 0, h: 0, minW: 0, minH: 0, x: 0, y: 1, i: "7",static: true }}></div>}
+      {this.props.dashboardItems.callsAndAgents ? callsAndAgents : <div key ="r" data-grid={{ w: 0, h: 0, minW: 0, minH: 0,  x: 0, y: 1, i: "8",static: true }}></div>}
        </ReactGridLayout>
           </div>
       )

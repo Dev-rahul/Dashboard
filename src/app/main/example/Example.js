@@ -13,6 +13,7 @@ import Dashboard from '../Dashboard/dashboard'
 import DraggableGrid from '../DragableGrid/draggableGrid'
 import ExtensionTable from '../Table/table'
 import DataTable from '../Table/table1'
+import Settings from '../SettingsComponent/settings';
 import Websocket from '../websocket'
 
 import {
@@ -59,16 +60,17 @@ function renderTabContent (
   // console.log(tab);
   function handleClick (event) {
     // console.log(event.currentTarget);
+    console.log(event);
     setAnchorEl(event.currentTarget)
   }
 
   function handleClose () {
     setAnchorEl(null)
   }
-
   const handleChange = name => event => {
     setDashboardItems({ ...dashboardItems, [name]: event.target.checked })
   }
+  
 
   console.log(tab)
   if (tab.name === 'Dashboard') {
@@ -161,7 +163,7 @@ label="Status"
   } else if (tab.name === 'One Hour Summary') {
     return <DataTable extensionList={extensonList} />
   } else if (tab.name === 'settings') {
-    return <h3> This is settings Component {JSON.stringify(extensonList)} </h3>
+    return <Settings/>
   }
 }
 
@@ -226,67 +228,55 @@ function Example (props) {
     dispatch(Actions.handleTabClose(index))
     forceUpdate()
     console.log("index", index);
-    // console.log('index', index, tabList[index]);
-    // let currentItem;
-    // navItems[0].children.map(item => {
-    // if(item.id === tabList[index].name) {
-    // currentItem = item;
-    // } else {
-    // if(item.children !== undefined) {
-    // item.children.map(childItem => {
-    // if(childItem.id === tabList[index].name) {
-    // currentItem = childItem;
-    // }
-    // })
-    // }
-    // }
-    // })
-    // console.log('currentItem', currentItem);
-
-    // currentItem.active = false;
+    
     dispatch(Actions.resetNavigation())
 
     // dispatch(Actions.updateNavigationItem(currentItem.id, currentItem));
 
     let currentActiveTab = activeTab
     if (activeTab >= tabList.length) {
-      currentActiveTab = tabList.length - 1
+      currentActiveTab = tabList.length - 1;
+    } else if(currentActiveTab === index && index=== tabList.length - 1) {
+        currentActiveTab = index -1;
     }
-    if (index === 0) {
+    else if (index === 0 && currentActiveTab === index) {
       currentActiveTab = currentActiveTab + 1
     }
-    if (activeTab > index) {
+    else if(index === tabList.length -1) {
+        currentActiveTab = activeTab +1;  
+    }
+    else if (activeTab !== index) {
       currentActiveTab = activeTab + 1
     }
     let currentItem
     // console.log(" Tab in close", tabList, activeTab, index);
-    if (index === 0 && activeTab === 0) {
-      if (tabList.length > 1) {
-        navItems[0].children.map(item => {
-          if (item.id === tabList[currentActiveTab].name) {
-            currentItem = item
-          } else {
-            if (item.children !== undefined) {
-              item.children.map(childItem => {
-                if (childItem.id === tabList[currentActiveTab].name) {
-                  currentItem = childItem
-                }
-              })
-            }
-          }
-        })
-        currentItem.active = true
-        console.log('Active Tab in close', activeTab, currentItem)
+    // if (index === 0 && activeTab === 0) {
+    //   if (tabList.length > 1) {
+    //     navItems[0].children.map(item => {
+    //       if (item.id === tabList[currentActiveTab].name) {
+    //         currentItem = item
+    //       } else {
+    //         if (item.children !== undefined) {
+    //           item.children.map(childItem => {
+    //             if (childItem.id === tabList[currentActiveTab].name) {
+    //               currentItem = childItem
+    //             }
+    //           })
+    //         }
+    //       }
+    //     })
+    //     currentItem.active = true
+    //     console.log('Active Tab in close', activeTab, currentItem)
 
-        dispatch(Actions.updateNavigationItem(currentItem.id, currentItem))
-        if (currentItem.id === 'Dashboard') {
-          currentItem.children.map(childItem => {
-            childItem.active = false
-            dispatch(Actions.updateNavigationItem(childItem.id, childItem))
-          })
-        }
-      }
-    } else {
+    //     dispatch(Actions.updateNavigationItem(currentItem.id, currentItem))
+    //     if (currentItem.id === 'Dashboard') {
+    //       currentItem.children.map(childItem => {
+    //         childItem.active = false
+    //         dispatch(Actions.updateNavigationItem(childItem.id, childItem))
+    //       })
+    //     }
+    //   }
+    // } else {
       if (tabList.length > 1) {
         navItems[0].children.map(item => {
           if (item.id === tabList[currentActiveTab - 1].name) {
@@ -312,7 +302,7 @@ function Example (props) {
           })
         }
       }
-    }
+    //}
   }
 
   function handleTabPositionChange (a, b) {
